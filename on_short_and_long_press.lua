@@ -11,7 +11,7 @@ function OnEvent(event, arg)
     
     if event == "MOUSE_BUTTON_PRESSED" and arg == 6 then
         OutputLogMessage("pressed\n")
-        pressTime = GetRunningTime()  -- Get current time
+        pressTime = GetRunningTime()
         OutputLogMessage("%s\n", pressTime)
         
     elseif event == "MOUSE_BUTTON_RELEASED" and arg == 6 then
@@ -19,18 +19,28 @@ function OnEvent(event, arg)
         OutputLogMessage("released\n")
         releaseTime = GetRunningTime()
         OutputLogMessage("%s %s -> ", releaseTime, pressTime)
-        if (releaseTime - pressTime) < 250 then  -- Short press (<500ms)
-            OutputLogMessage("short press")
-            PressKey("lalt")  -- Hold Alt   
-            PressAndReleaseKey("left")  -- Press Left Arrow
-            ReleaseKey("lalt")  -- Release Alt
-            OutputLogMessage('.\n')
-
-        else  -- Long press (>=500ms)
-            OutputLogMessage("long press")
+        if (releaseTime - pressTime) < 250 then
+            -- Close tab (Ctrl + W)
+            OutputLogMessage("short press") 
             PressKey("lctrl")
-            PressAndReleaseKey("w")  -- Example: Close tab (Ctrl + W)
+            PressAndReleaseKey("w") 
             ReleaseKey("lctrl")
+            OutputLogMessage('.\n')
+        elseif (releaseTime - pressTime) > 1000 then
+            -- Reopen closed tab (Ctrl + Shift + T)
+            OutputLogMessage("very long press")
+            PressKey("lctrl")
+            PressKey("lshift")
+            PressAndReleaseKey("t")
+            ReleaseKey("lshift")
+            ReleaseKey("lalt")
+            OutputLogMessage('.\n')
+        else
+            -- Browser Back
+            OutputLogMessage("long press")
+            PressKey("lalt")
+            PressAndReleaseKey("left")
+            ReleaseKey("lalt")
             OutputLogMessage('.\n')
         end
     end
