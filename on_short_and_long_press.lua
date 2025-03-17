@@ -33,7 +33,7 @@ function OnEvent(event, arg)
             PressKey("lshift")
             PressAndReleaseKey("t")
             ReleaseKey("lshift")
-            ReleaseKey("lalt")
+            ReleaseKey("lctrl")
             OutputLogMessage('.\n')
         else
             -- Browser Back
